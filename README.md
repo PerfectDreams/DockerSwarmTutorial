@@ -15,6 +15,25 @@ If you are just like me that likes to scour the internet to see if users think t
 * https://blog.kronis.dev/articles/docker-swarm-over-kubernetes
 * https://news.ycombinator.com/item?id=29448182
 
+## Why SHOULDN'T I use Docker Swarm?
+
+As with any tool, there are some disadvantages to Docker Swarm, here are some reasons that you may want to avoid using Docker Swarm:
+
+* You are using AWS/GCP/Azure/etc.
+  * Just use their managed Kubernetes service. As I said before: Kubernetes is cool, except when it breaks. However using a Kubernetes instance that is managed by someone else lifts all the heavyweight from you, in exchange of a pretty hefty price increase.
+* You need to have distributed storage because you want to have a distributed database.
+  * Docker Swarm does support distributed storage, however Kubernetes' solutions is more rock solid so just go with Kubernetes. But then again, do you *really* need a distributed storage for your smol service? You can go pretty far with a single instance database!
+* You need a feature that isn't supported by Docker Swarm.
+  * While Docker Swarm isn't deprecated, it is also not actively developed, so if you require a feature that isn't supported by it, it may take a loooong time until it is implemented.
+* You like to have shiny buzzwords in your CV.
+
+## When SHOULD I use Docker Swarm?
+
+* If you are self hosting your services in a dedicated server or in a VPS. (Example: dedicated servers @ OVH, Hetzner, etc)
+* If you use Docker Compose.
+  * Docker Swarm uses Docker Compose files for deployment too, so it is a natural step from Docker Compose -> Swarm!
+* If your services don't require persistent storage.
+
 ## But should I use Docker Swarm?
 
 Contrary to the popular belief, Docker Swarm is not deprecated! Yeah, sure, sadly there isn't too much dev work on Docker Swarm nowadays, but it isn't *dead* or *deprecated*, and after all, if it fits your needs, does it really need to be actively worked on? As long as it works, and if you get to a point where Docker Swarm is not fitting your needs, *then* move to Kubernetes! Don't overcomplicate your life right now just because some day, maybe, you would need Kubernetes.
