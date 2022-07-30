@@ -8,14 +8,18 @@ Kubernetes may be painless if you are using a managed Kubernetes instance, but i
 
 So why not use Docker Swarm?
 
-Contrary to the popular belief, Docker Swarm is not deprecated! Yeah, sure, sadly there isn't too much dev work on Docker Swarm nowadays, but it isn't *dead* or *deprecated*, and after all, if it fits your needs, does it really need to be actively worked on? As long as it works, and if you get to a point where Docker Swarm is not fitting your needs, *then* move to Kubernetes! Don't overcomplicate your life right now just because some day, maybe, you would need Kubernetes.
-
 ## But is Docker Swarm... good?
 
 If you are just like me that likes to scour the internet to see if users think that *insert tech here* is good, here are some posts on the internet about people talking about their experience with Docker Swarm!
 
 * https://blog.kronis.dev/articles/docker-swarm-over-kubernetes
 * https://news.ycombinator.com/item?id=29448182
+
+## But should I use Docker Swarm?
+
+Contrary to the popular belief, Docker Swarm is not deprecated! Yeah, sure, sadly there isn't too much dev work on Docker Swarm nowadays, but it isn't *dead* or *deprecated*, and after all, if it fits your needs, does it really need to be actively worked on? As long as it works, and if you get to a point where Docker Swarm is not fitting your needs, *then* move to Kubernetes! Don't overcomplicate your life right now just because some day, maybe, you would need Kubernetes.
+
+Besides, if it does get deprecated, you can migrate off of it with Kompose!
 
 ## Official Tutorial
 
@@ -261,6 +265,8 @@ TODO
 Remember that you can access the service at `YourMachineIP:8080`?
 
 I actually lied, you can access the service at *any* node IP! Not just your machine IP, and it can even be in a machine that *isn't* hosting your service at the moment! As long as it is connected to your swarm, you are able to access it.
+
+If you ever used k3s' Load Balancer "Klipper", it works in the exact same way!
 
 With this, we can load balance our service with nginx!
 
