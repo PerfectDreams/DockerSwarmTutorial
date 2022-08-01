@@ -15,12 +15,14 @@ If you are just like me that likes to scour the internet to see if users think t
 * https://blog.kronis.dev/articles/docker-swarm-over-kubernetes
 * https://news.ycombinator.com/item?id=29448182
 
-## Why SHOULDN'T I use Docker Swarm?
+## When SHOULDN'T I use Docker Swarm?
 
 As with any tool, there are some disadvantages to Docker Swarm, here are some reasons that you may want to avoid using Docker Swarm:
 
 * You are using AWS/GCP/Azure/etc.
   * Just use their managed Kubernetes service. As I said before: Kubernetes is cool, except when it breaks. However using a Kubernetes instance that is managed by someone else lifts all the heavyweight from you, in exchange of a pretty hefty price increase.
+* You need to auto scale according to demand.
+  * However if you are using a rented dedicated server, why would tou want to auto scale? And if you are using a host that charges per usage (like AWS, GCP, Azure, etc), then they probably has a managed Kubernetes instance.
 * You need to have distributed storage because you want to have a distributed database.
   * Docker Swarm does support distributed storage, however Kubernetes' solutions is more rock solid so just go with Kubernetes. But then again, do you *really* need a distributed storage for your smol service? You can go pretty far with a single instance database!
 * You need a feature that isn't supported by Docker Swarm.
