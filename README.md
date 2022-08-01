@@ -14,6 +14,10 @@ If you are just like me that likes to scour the internet to see if users think t
 
 * https://blog.kronis.dev/articles/docker-swarm-over-kubernetes
 * https://news.ycombinator.com/item?id=29448182
+* https://news.ycombinator.com/item?id=32306857
+* https://news.ycombinator.com/item?id=32305800
+* https://news.ycombinator.com/item?id=32305952
+* https://news.ycombinator.com/item?id=32307229
 
 ## When SHOULDN'T I use Docker Swarm?
 
