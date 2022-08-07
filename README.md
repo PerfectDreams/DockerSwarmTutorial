@@ -1,3 +1,7 @@
+<p align="center">
+<img width="100%" src="https://user-images.githubusercontent.com/9496359/183309009-9268544a-b47b-44ef-8933-848e2f345aa2.png">
+</p>
+
 # Docker Swarm Mode Tutorial
 
 I know, Kubernetes is what all the cool kidz are using nowadays! And Kubernetes is cool too... until it explodes and you spend hours trying to debug the issue. In fact, I decided to learn about Docker Swarm after getting burned by Kubernetes for the nth time... 
