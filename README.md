@@ -70,7 +70,7 @@ If you have multiple network interfaces, Docker will ask you to choose what IP t
 
 By default, Docker will use IPs on the 10.0.0.0 range, if your machine's interface is behind NAT and it also uses the 10.0.0.0 range, it will cause issues when you try to access containers hosted in your Docker Swarm!
 
-To fix this, initialize your Docker Swarm with *X*
+To fix this, initialize your Docker Swarm with the `--default-addr-pool` parameter!
 
 ```bash
 sudo docker swarm init --default-addr-pool 192.168.128.0/18
@@ -79,6 +79,8 @@ sudo docker swarm init --default-addr-pool 192.168.128.0/18
 **Attention:** If you change your `default-addr-pool`, check if the IPs aren't being used by another network! `ip a` shows what IP ranges are being used. If you use an IP range that is already being used by something else, your containers won't start due to `Pool overlaps with other one on this address space`!
 
 If you get `Swarm initialized: current node (qgsfyhmhwtpkp7zpo7lts2vhp) is now a manager.`, then your Docker instance is in a swarm, and your node is a manager node, sweet!
+
+**Attention:** If you have multiple network interfaces, Docker will say `Error response from daemon: could not choose an IP address to advertise since this system has multiple addresses on different interfaces (10.29.10.1 on ens18 and 172.29.10.1 on ens19) - specify one with --advertise-addr`. In this case, the `--advertise-addr` parameter should be the IP that *can communicate with other nodes*! So, if `172.29.10.1` is the IP that can access other nodes, then that should be your `--advertise-addr`.
 
 **Attention:** If your Docker instance is communicating to other Docker instances via VXLAN or any other network that has a lower MTU than 1500, you need to delete the default ingress network and create a new one! This is needed because Docker also uses VXLAN, so if you don't change the MTU, there will be intermittent packet losses when communicating between nodes! More information at https://github.com/moby/moby/issues/36689#issuecomment-987706496
 * `docker network rm ingress`
