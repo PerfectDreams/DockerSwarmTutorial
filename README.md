@@ -70,7 +70,7 @@ If you have multiple network interfaces, Docker will ask you to choose what IP t
 
 By default, Docker will use IPs on the 10.0.0.0 range, if your machine's interface is behind NAT and it also uses the 10.0.0.0 range, it will cause issues when you try to access containers hosted in your Docker Swarm!
 
-To fix this, initialize your Docker Swarm with the `--default-addr-pool` parameter!
+To fix this, initialize your Docker Swarm with the `--default-addr-pool` parameter! Let's suppose we want to use `192.168.128.0/18` for our containers. [[🐳 Learn more]](https://docs.docker.com/engine/swarm/swarm-mode/#configuring-default-address-pools)
 
 ```bash
 sudo docker swarm init --default-addr-pool 192.168.128.0/18
@@ -83,9 +83,11 @@ If you get `Swarm initialized: current node (qgsfyhmhwtpkp7zpo7lts2vhp) is now a
 **Attention:** If you have multiple network interfaces, Docker will say `Error response from daemon: could not choose an IP address to advertise since this system has multiple addresses on different interfaces (10.29.10.1 on ens18 and 172.29.10.1 on ens19) - specify one with --advertise-addr`. In this case, the `--advertise-addr` parameter should be the IP that *can communicate with other nodes*! So, if `172.29.10.1` is the IP that can access other nodes, then that should be your `--advertise-addr`.
 
 **Attention:** If your Docker instance is communicating to other Docker instances via VXLAN or any other network that has a lower MTU than 1500, you need to delete the default ingress network and create a new one! This is needed because Docker also uses VXLAN, so if you don't change the MTU, there will be intermittent packet losses when communicating between nodes! More information at https://github.com/moby/moby/issues/36689#issuecomment-987706496
-* `docker network rm ingress`
-* `docker network create --driver overlay --ingress --opt com.docker.network.driver.mtu=1280 --subnet 192.168.128.0/24 --gateway 192.168.128.1 ingress`
-* Restart Docker with `systemctl restart docker`
+* If you are using a VXLAN network for node communication (which Docker will use that network to use VXLAN on top of it), you need to decrease your MTU from the default 1450 to 1400
+  * `docker network rm ingress`
+  * `docker network create --driver overlay --ingress --opt com.docker.network.driver.mtu=1400 --subnet 192.168.128.0/24 --gateway 192.168.128.1 ingress`
+    * To check what `subnet` and `gateway` you should use, use `docker inspect overlay` and check the IPAM section!
+  * Restart Docker with `systemctl restart docker`
 
 ## Accessing private images hosted on GitHub's `ghcr.io`
 
