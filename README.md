@@ -23,6 +23,13 @@ If you are just like me that likes to scour the internet to see if users think t
 * https://news.ycombinator.com/item?id=32305952
 * https://news.ycombinator.com/item?id=32307229
 
+## When SHOULD I use Docker Swarm?
+
+* If you are self hosting your services in a dedicated server or in a VPS. (Example: dedicated servers @ OVH, Hetzner, etc)
+* If you are already using Docker Compose.
+  * Docker Swarm uses Docker Compose files for deployment too, so it is a natural step from Docker Compose -> Swarm! And I mean it! You just need to add a new `deploy` key to your already existing compose files to setup how do you want your container to be replicated and deployed... and that's it!
+* If your services don't require persistent storage.
+
 ## When SHOULDN'T I use Docker Swarm?
 
 As with any tool, there are some disadvantages to Docker Swarm, here are some reasons that you may want to avoid using Docker Swarm:
@@ -37,18 +44,11 @@ As with any tool, there are some disadvantages to Docker Swarm, here are some re
   * While Docker Swarm isn't deprecated, it is also not actively developed, so if you require a feature that isn't supported by it, it may take a loooong time until it is implemented.
 * You like to have shiny buzzwords in your CV.
 
-## When SHOULD I use Docker Swarm?
-
-* If you are self hosting your services in a dedicated server or in a VPS. (Example: dedicated servers @ OVH, Hetzner, etc)
-* If you use Docker Compose.
-  * Docker Swarm uses Docker Compose files for deployment too, so it is a natural step from Docker Compose -> Swarm!
-* If your services don't require persistent storage.
-
 ## But should I use Docker Swarm?
 
-Contrary to the popular belief, Docker Swarm is not deprecated! Yeah, sure, sadly there isn't too much dev work on Docker Swarm nowadays, but it isn't *dead* or *deprecated*, and after all, if it fits your needs, does it really need to be actively worked on? As long as it works, and if you get to a point where Docker Swarm is not fitting your needs, *then* move to Kubernetes! Don't overcomplicate your life right now just because some day, maybe, you would need Kubernetes.
+Contrary to the popular belief, Docker Swarm is not deprecated! Yeah, sure, sadly there isn't too much dev work on Docker Swarm nowadays, but it isn't *dead* or *deprecated*, and after all, if it fits your needs, does it really need to be actively worked on? As long as it works, and if you get to a point where Docker Swarm is not fitting your needs, *then* move to Kubernetes! Don't overcomplicate your life right now just because some day, *maybe*, you would need Kubernetes.
 
-Besides, if it does get deprecated, you can migrate off of it with Kompose!
+If it does get deprecated, you can migrate off of it by converting your Docker Compose deployment files with [Kompose](https://kompose.io/), so it is not like you are going to end up being stuck on a dead platform forever.
 
 ## Official Tutorial
 
