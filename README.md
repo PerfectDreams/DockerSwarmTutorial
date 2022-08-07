@@ -401,7 +401,7 @@ temurin-test_temurin.1.wost4c51s6ma@docker-swarm-manager-1    | Max Memory: 984M
 temurin-test_temurin.1.wost4c51s6ma@docker-swarm-manager-1    | Available Processors: 4
 ```
 
-It still allocates ~1GBs
+It still allocates ~1GBs, so as you can see the container just ignores our `reservations` when figuring out how much memory it can allocate.
 
 #### But what if we don't set `Xmx/Xms` WHILE we have a `limits` set?
 ```yml
