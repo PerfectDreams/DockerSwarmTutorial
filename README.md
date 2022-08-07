@@ -25,6 +25,8 @@ If you are just like me that likes to scour the internet to see if users think t
 
 ## When SHOULD I use Docker Swarm?
 
+Docker Swarm is a orchestrator, the "best little multi node orchestrator that could". It is very useful if you are already using Docker and you need to replicate your containers in multiple nodes/VMs.
+
 * If you are self hosting your services in a dedicated server or in a VPS. (Example: dedicated servers @ OVH, Hetzner, etc)
 * If you are already using Docker Compose.
   * Docker Swarm uses Docker Compose files for deployment too, so it is a natural step from Docker Compose -> Swarm! And I mean it! You just need to add a new `deploy` key to your already existing compose files to setup how do you want your container to be replicated and deployed... and that's it!
