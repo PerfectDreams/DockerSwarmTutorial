@@ -342,7 +342,7 @@ services:
       JAVA_TOOL_OPTIONS: "-verbose:gc -Xmx512M -Xms512M"
 ```
 **Output:**
-```yml
+```
 temurin-test_temurin.1.ulbt33xyo0d0@docker-swarm-worker-1    | [0.005s][info][gc] Using G1
 temurin-test_temurin.1.ulbt33xyo0d0@docker-swarm-worker-1    | Used Memory: 1MiB
 temurin-test_temurin.1.ulbt33xyo0d0@docker-swarm-worker-1    | Free Memory: 510MiB
@@ -367,7 +367,7 @@ services:
       JAVA_TOOL_OPTIONS: "-verbose:gc -Xmx512M -Xms512M"
 ```
 **Output:**
-```yml
+```
 temurin-test_temurin.1.vrp8yjosnc5d@docker-swarm-manager-1    | [0.005s][info][gc] Using G1
 temurin-test_temurin.1.vrp8yjosnc5d@docker-swarm-manager-1    | Used Memory: 1MiB
 temurin-test_temurin.1.vrp8yjosnc5d@docker-swarm-manager-1    | Free Memory: 510MiB
@@ -392,7 +392,7 @@ services:
       JAVA_TOOL_OPTIONS: "-verbose:gc"
 ```
 **Output:**
-```yml
+```
 temurin-test_temurin.1.wost4c51s6ma@docker-swarm-manager-1    | [0.005s][info][gc] Using G1
 temurin-test_temurin.1.wost4c51s6ma@docker-swarm-manager-1    | Used Memory: 1MiB
 temurin-test_temurin.1.wost4c51s6ma@docker-swarm-manager-1    | Free Memory: 62MiB
@@ -417,7 +417,7 @@ services:
       JAVA_TOOL_OPTIONS: "-verbose:gc"
 ```
 **Output:**
-```yml
+```
 temurin-test_temurin.1.vq0a6qz6kjkr@docker-swarm-manager-1    | [0.002s][info][gc] Using Serial
 temurin-test_temurin.1.vq0a6qz6kjkr@docker-swarm-manager-1    | Used Memory: 0MiB
 temurin-test_temurin.1.vq0a6qz6kjkr@docker-swarm-manager-1    | Free Memory: 7MiB
