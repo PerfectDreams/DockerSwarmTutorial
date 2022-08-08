@@ -538,6 +538,10 @@ server {
 }
 ```
 
+## GitOps fun
+
+TODO
+
 ## Conclusion
 
 TODO
