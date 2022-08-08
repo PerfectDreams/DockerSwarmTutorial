@@ -105,7 +105,7 @@ docker login ghcr.io
 
 Use your GitHub username as your Username, and a [Personal Access Token](https://github.com/settings/tokens) as your Password.
 
-**Attention:** You will need to login with your account on every node in the Docker Swarm! If you don't, some nodes may fail to run your container because they aren't able to download your container image!
+When deploying your stack, add the parameter `--with-registry-auth`!
 
 ## Hosting your first service
 
