@@ -540,6 +540,8 @@ server {
 
 ## GitOps fun
 
+https://betterprogramming.pub/docker-tips-access-the-docker-daemon-via-ssh-97cd6b44a53
+
 TODO
 
 ## Conclusion
