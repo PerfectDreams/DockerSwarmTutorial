@@ -248,6 +248,8 @@ configs:
 
 `docker stack deploy --compose-file docker-compose.yml stackdemo`
 
+Don't worry if two applications have a config named `my_first_config`! Docker prefixes the service name before the config name.
+
 ```bash
 mrpowergamerbr@docker-swarm-test:~$ sudo docker exec -it 66726bffdd6d /bin/bash
 root@helloworld-2:/www# cat /loritta_cute.txt
@@ -256,6 +258,12 @@ Loritta is so cute! :3
 
 **Attention:** If you update your configuration file, the `docker stack deploy --compose-file docker-compose.yml stackdemo` command will fail! This is because there is another container that is already using the configuration file. To workaround this issue, change the configuration name (`my_first_config`) after changing anything in the configuration file!
 * **Idea:** Suffix the file's hash at the end of the configuration file, that's what Kubernetes' Kustomize does, and then create a script that periodically tries to delete all configs from your Docker Swarm cluster, configs that are in use won't be deleted by Docker. :P
+
+## Creating variations of your Docker Compose file (Kustomize-like patches)
+
+While you can merge compose files with `docker compose -f docker-compose.stats-collector.yml -f patch.yml config`, it doesn't work *that* great, because Docker ends up mangling the file too much to the point that `docker stack deploy` rejects the file with "nuh huh, that ain't a Docker Compose file my dawg!" (example: It removes the `version` from the Compose file, so Docker Swarm thinks that's not a Docker Compose v3 file)
+
+So you can use a tool like [yq](https://github.com/mikefarah/yq) to merge multiple yaml files, and then deploy that file.
 
 ## Limiting Resources for the Scheduler
 
@@ -300,7 +308,7 @@ Messing with `limits` and `reservations` may impact your Java application in way
 
 Don't worry, *it is also painfully hard on Kubernetes too*. 😭
 
-My Swarm node Virtual Machine has 4GBs of RAM, 4 cores. So let's do some tests on it! The application will be using Java 17 (you MUST use Java 8.0_131 or above because Java didn't respect cgroups before that. We are in `${InsertYearHere}` already, move on to Java 17!!) The code that we will be using is:
+My Swarm node Virtual Machine has 4GBs of RAM, 4 cores. So let's do some tests on it! The application will be using Java 17 (you MUST use Java 8.0_131 or above because Java didn't respect cgroups before that. We are in `${InsertYearHere}` already, move on to Java 17!!) and will print memory and CPU stats to the console before quitting. If you want to play around with it on your computer, [the container is public](https://github.com/MrPowerGamerBR/DebugAllocationContainers/pkgs/container/debugallocationcontainers)!
 ```kotlin
 fun main() {
     val mb = 1024 * 1024
