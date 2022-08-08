@@ -550,6 +550,8 @@ https://betterprogramming.pub/docker-tips-access-the-docker-daemon-via-ssh-97cd6
 
 bye bye~
 
+If you are deploying a service that uses an image that is hosted in a private repository, you need to `docker login` in the machine that you are triggering the deploy!
+
 TODO
 
 ## Conclusion
