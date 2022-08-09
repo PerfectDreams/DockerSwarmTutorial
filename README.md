@@ -22,7 +22,7 @@ If you are just like me that likes to scour the internet to see if users think t
 * https://news.ycombinator.com/item?id=32305800
 * https://news.ycombinator.com/item?id=32305952
 * https://news.ycombinator.com/item?id=32307229
-<img width="500" alt="DiscordCanary_vqbtjtAL37" src="https://user-images.githubusercontent.com/9496359/183654510-568ddef6-68e8-4555-8380-429ad827d270.png">
+* https://user-images.githubusercontent.com/9496359/183654510-568ddef6-68e8-4555-8380-429ad827d270.png
 
 ## When SHOULD I use Docker Swarm?
 
