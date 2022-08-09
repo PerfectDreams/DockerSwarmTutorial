@@ -91,33 +91,7 @@ If you get `Swarm initialized: current node (qgsfyhmhwtpkp7zpo7lts2vhp) is now a
 
 **Attention:** If you have multiple network interfaces, Docker will say `Error response from daemon: could not choose an IP address to advertise since this system has multiple addresses on different interfaces (10.29.10.1 on ens18 and 172.29.10.1 on ens19) - specify one with --advertise-addr`. In this case, the `--advertise-addr` parameter should be the IP that *can communicate with other nodes*! So, if `172.29.10.1` is the IP that can access other nodes, then that should be your `--advertise-addr`.
 
-<details>
-<summary><b>Attention:</b> If your Docker instance is communicating to other Docker instances via VXLAN or any other network that has a different MTU than the default 1500, you need to delete the default ingress network and create a new one! This is needed because Docker doesn't inherit the MTU of your networking interface, there will be intermittent packet losses when communicating between nodes! More information at https://github.com/moby/moby/issues/36689#issuecomment-987706496
-</summary>
- 
-![https://memegenerator.net/img/instances/37438597.jpg](https://memegenerator.net/img/instances/37438597.jpg)
-
-To do this, check what is the MTU of the network that is going to be used for intra node communication by using `ip a`, if it is different than 1500, you need to recreate the ingress network by doing this:
-* `docker network rm ingress`
-* `docker network create --driver overlay --ingress --opt com.docker.network.driver.mtu=MTUOfTheNetworkHere --subnet 192.168.128.0/24 --gateway 192.168.128.1 ingress`
-  * To check what `subnet` and `gateway` you should use, use `docker inspect overlay` and check the IPAM section!
-  * Let's suppose that we are using a VXLAN network for communication, VXLAN networks use a MTU size of 1450, so we need to use `--opt com.docker.network.driver.mtu=1450`
-* Restart Docker with `systemctl restart docker`
- 
-This fixes Outside World -> Swarm Cluster communication, now we need to fix communication between your containers!
-
-To do this, append this to the end of every `docker-compose.yml`
- 
-```yml
-networks:
-  default:
-    driver: overlay
-    driver_opts:
-      com.docker.network.driver.mtu: 1450
-```
- 
-[[Learn More]](https://github.com/moby/moby/issues/36689#issuecomment-1209784419)
-</details>
+**Attention:** If your Docker instance is communicating to other Docker instances via VXLAN or any other network that has a different MTU than the default 1500, you need to delete the default ingress network and create a new one! This is needed because Docker doesn't inherit the MTU of your networking interface, there will be intermittent packet losses when communicating between nodes! [Read more about how to fix it here](docker-mtu.md)
 
 ## Accessing private images hosted on GitHub's `ghcr.io`
 
