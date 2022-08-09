@@ -549,7 +549,7 @@ https://betterprogramming.pub/docker-tips-access-the-docker-daemon-via-ssh-97cd6
 * Generate a public/private key with `ssh-keygen`
 * Login to your Docker instance
 * Add the public key (`cat ~/.ssh/id_rsa.pub`) to your Docker instance AS ROOT `sudo nano /root/.ssh/authorized_keys` (just append it)
-* `docker -H ssh://root@127.0.0.1:2222 ps`
+* `docker -H ssh://root@127.0.0.1:2222 ps` or `export DOCKER_HOST=ssh://root@127.0.0.1:2222`
 * yay!
 
 bye bye~
