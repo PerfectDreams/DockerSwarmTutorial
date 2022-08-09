@@ -46,7 +46,7 @@ As with any tool, there are some disadvantages to Docker Swarm, here are some re
   * While Docker Swarm isn't deprecated, it is also not actively developed, so if you require a feature that isn't supported by it, it may take a loooong time until it is implemented.
 * You like to have shiny buzzwords in your CV.
 
-## But should I use Docker Swarm?
+## But isn't Docker Swarm... *dead*?
 
 Contrary to the popular belief, Docker Swarm is not deprecated! Yeah, sure, sadly there isn't too much dev work on Docker Swarm nowadays, but it isn't *dead* or *deprecated*, and after all, if it fits your needs, does it really need to be actively worked on? As long as it works, and if you get to a point where Docker Swarm is not fitting your needs, *then* move to Kubernetes! Don't overcomplicate your life right now just because some day, *maybe*, you would need Kubernetes.
 
