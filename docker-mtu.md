@@ -6,7 +6,7 @@
 
 If your Docker instance is communicating to other Docker instances via VXLAN or any other network that has a different MTU than the default 1500, you need to delete the default ingress network and create a new one! This is needed because Docker doesn't inherit the MTU of your networking interface, there will be intermittent packet losses when communicating between nodes!
 
-Docker by default doesn't detect the network MTU because [reasons](https://github.com/moby/moby/pull/18108), so by default it use 1500 MTU for connections, which will cause issues if your network has a different MTU!
+Docker by default doesn't detect the network MTU because [reasons](https://github.com/moby/moby/pull/18108), so by default it uses 1500 MTU for connections, which will cause issues if your network has a different MTU!
 
 <p align="center">
 <img width="100%" src="https://user-images.githubusercontent.com/9496359/183776273-14ff3146-f3e1-418f-a5ba-e4dd280666f3.png">
