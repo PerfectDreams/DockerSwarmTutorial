@@ -56,4 +56,4 @@ And that's it! Now you shouldn't have any connectivity issues in your Swarm.
 
 [[If you want to learn more, this issue talks a lot about connectivity issues!]](https://github.com/moby/moby/issues/36689#issuecomment-987706496)
 
-There is a [Pull Request](https://github.com/moby/moby/pull/43197) that automatically sets the MTU for all networks without the need of changing every network manually, let's hope it is merged to Docker Desktop later :3
+There is a [Pull Request](https://github.com/moby/moby/pull/43197) that automatically sets the MTU for all networks without the need of changing every network manually, let's hope it is merged to Docker Desktop in the future. :3
