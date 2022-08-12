@@ -384,6 +384,10 @@ If you are deploying a service that uses an image that is hosted in a private re
 
 TODO
 
+## Cleaning up unused files
+
+Docker by default doesn't clean up unused files, so maybe it could be a good idea to setup a cron job to automatically run `docker system prune` on your nodes to avoid running out of disk space.
+
 ## Conclusion
 
 TODO
