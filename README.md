@@ -388,6 +388,8 @@ TODO
 
 Docker by default doesn't clean up unused files, so maybe it could be a good idea to setup a cron job to automatically run `docker system prune` on your nodes to avoid running out of disk space.
 
+[[🐳 Learn more]](https://docs.docker.com/config/pruning/)
+
 ## Conclusion
 
 TODO
