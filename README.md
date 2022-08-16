@@ -85,13 +85,20 @@ To fix this, initialize your Docker Swarm with the `--default-addr-pool` paramet
 sudo docker swarm init --default-addr-pool 192.168.128.0/18
 ```
 
-**Attention:** If you change your `default-addr-pool`, check if the IPs aren't being used by another network! `ip a` shows what IP ranges are being used. If you use an IP range that is already being used by something else, your containers won't start due to `Pool overlaps with other one on this address space`!
+> **Warning**
+> 
+> If you change your `default-addr-pool`, check if the IPs aren't being used by another network! `ip a` shows what IP ranges are being used. If you use an IP range that is already being used by something else, your containers won't start due to `Pool overlaps with other one on this address space`!
+> 
+> If you get `Swarm initialized: current node (qgsfyhmhwtpkp7zpo7lts2vhp) is now a manager.`, then your Docker instance is in a swarm, and your node is a manager node, sweet!
 
-If you get `Swarm initialized: current node (qgsfyhmhwtpkp7zpo7lts2vhp) is now a manager.`, then your Docker instance is in a swarm, and your node is a manager node, sweet!
 
-**Attention:** If you have multiple network interfaces, Docker will say `Error response from daemon: could not choose an IP address to advertise since this system has multiple addresses on different interfaces (10.29.10.1 on ens18 and 172.29.10.1 on ens19) - specify one with --advertise-addr`. In this case, the `--advertise-addr` parameter should be the IP that *can communicate with other nodes*! So, if `172.29.10.1` is the IP that can access other nodes, then that should be your `--advertise-addr`.
+> **Warning**
+> 
+> If you have multiple network interfaces, Docker will say `Error response from daemon: could not choose an IP address to advertise since this system has multiple addresses on different interfaces (10.29.10.1 on ens18 and 172.29.10.1 on ens19) - specify one with --advertise-addr`. In this case, the `--advertise-addr` parameter should be the IP that *can communicate with other nodes*! So, if `172.29.10.1` is the IP that can access other nodes, then that should be your `--advertise-addr`.
 
-**Attention:** If your Docker instance is communicating to other Docker instances via VXLAN or any other network that has a different MTU than the default 1500, you need to delete the default ingress network and create a new one! This is needed because Docker doesn't inherit the MTU of your networking interface, there will be intermittent packet losses when communicating between nodes! [Read more about how to fix it here](docker-mtu.md)
+> **Warning**
+> 
+> If your Docker instance is communicating to other Docker instances via VXLAN or any other network that has a different MTU than the default 1500, you need to delete the default ingress network and create a new one! This is needed because Docker doesn't inherit the MTU of your networking interface, there will be intermittent packet losses when communicating between nodes! [Read more about how to fix it here](docker-mtu.md)
 
 ## Accessing private images hosted on GitHub's `ghcr.io`
 
@@ -164,7 +171,9 @@ CONTAINER ID   IMAGE                         COMMAND      CREATED          STATU
 18588ab9c07c   strm/helloworld-http:latest   "/main.sh"   41 minutes ago   Up 41 minutes   80/tcp    stackdemo_front.1.nmreutrz6q4l57rolejuco6xa
 ```
 
-**Attention:** `docker ps` only shows the containers running on the current Docker instance! Don't forget about this if you include multiple Docker instances on the swarm!
+> **Warning**
+> 
+> `docker ps` only shows the containers running on the current Docker instance! Don't forget about this if you include multiple Docker instances on the swarm!
 
 ## Accessing services
 
@@ -214,7 +223,9 @@ You can also access the service externally at `YourMachineIP:8080`!
 ## Applying updates to your stack
 You can apply updates to your stack with `docker stack deploy --compose-file docker-compose.yml stackdemo`!
 
-**Attention:** If you had an service, removed it from the Compose file and used `stack deploy`, Docker will *not* remove the already running services! To remove an service, use `sudo docker service rm servicename`, you can see all of your stack's running services with `sudo docker stack services stackdemo`!
+> **Warning**
+> 
+> If you had an service, removed it from the Compose file and used `stack deploy`, Docker will *not* remove the already running services! To remove an service, use `sudo docker service rm servicename`, you can see all of your stack's running services with `sudo docker stack services stackdemo`!
 
 TODO: Rolling Updates
 
@@ -254,8 +265,11 @@ root@helloworld-2:/www# cat /loritta_cute.txt
 Loritta is so cute! :3
 ```
 
-**Attention:** If you update your configuration file, the `docker stack deploy --compose-file docker-compose.yml stackdemo` command will fail! This is because there is another container that is already using the configuration file. To workaround this issue, change the configuration name (`my_first_config`) after changing anything in the configuration file!
-* **Idea:** Suffix the file's hash at the end of the configuration file, that's what Kubernetes' Kustomize does, and then create a script that periodically tries to delete all configs from your Docker Swarm cluster, configs that are in use won't be deleted by Docker. :P
+> **Warning**
+> 
+> If you update your configuration file, the `docker stack deploy --compose-file docker-compose.yml stackdemo` command will fail! This is because there is another container that is already using the configuration file. To workaround this issue, change the configuration name (`my_first_config`) after changing anything in the configuration file!
+> 
+> **Idea:** Suffix the file's hash at the end of the configuration file, that's what Kubernetes' Kustomize does, and then create a script that periodically tries to delete all configs from your Docker Swarm cluster, configs that are in use won't be deleted by Docker. :P
 
 ## Creating variations of your Docker Compose file (Kustomize-like patches)
 
