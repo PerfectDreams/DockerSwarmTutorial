@@ -23,6 +23,7 @@ If you are just like me that likes to scour the internet to see if users think t
 * https://news.ycombinator.com/item?id=32305952
 * https://news.ycombinator.com/item?id=32307229
 * https://user-images.githubusercontent.com/9496359/183654510-568ddef6-68e8-4555-8380-429ad827d270.png
+* https://www.reddit.com/r/devops/comments/qxq1q9/is_docker_swarm_good_enough_for_production/hlg4xeu/
 
 ## When SHOULD I use Docker Swarm?
 
