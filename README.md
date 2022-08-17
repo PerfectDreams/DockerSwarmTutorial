@@ -70,7 +70,7 @@ I'm using a Ubuntu 22.04 VM for this tutorial.
 
 ## Install Docker Engine
 
-https://docs.docker.com/get-docker/
+https://docs.docker.com/engine/install/
 
 ## Start Docker Swarm Mode
 
