@@ -113,6 +113,19 @@ Use your GitHub username as your Username, and a [Personal Access Token](https:/
 
 When deploying your stack, add the parameter `--with-registry-auth`!
 
+## Logs and your disk space
+
+Once again something not related to Docker Swarm, but I thought it was nice to talk about this. :3
+
+By default, Docker uses `json-file` as its logging driver, however [Docker recomemnds changing the log driver to `local` because the `json-file` driver is only set by default for backwards compatibility](https://docs.docker.com/config/containers/logging/configure/).
+
+To do this, edit your `/etc/docker/daemon.json` and insert the following contents, if the file already exists, add the `log-driver` field to the already existing JSON.
+```json
+{
+  "log-driver": "local"
+}
+```
+
 ## Hosting your first service
 
 Did you know that Docker Swarm uses `docker-compose.yml` files??? Crazy huh?
