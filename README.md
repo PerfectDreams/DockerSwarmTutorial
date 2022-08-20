@@ -418,6 +418,10 @@ Docker by default doesn't clean up unused files, so maybe it could be a good ide
 
 [[🐳 Learn more]](https://docs.docker.com/config/pruning/)
 
+## If your node is not queueing new containers, or if you have containers that show up in `docker ps` but when trying to view their log, Docker says that the container doesn't exist
+
+If this is happening, probably your node's disk is full! Clean it up and it will magically fix itself :3
+
 ## Conclusion
 
 TODO
