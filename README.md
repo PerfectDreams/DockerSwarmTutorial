@@ -573,6 +573,10 @@ Docker by default doesn't clean up unused files, so maybe it could be a good ide
 
 If this is happening, probably your node's disk is full! Clean it up and it will magically fix itself :3
 
+## `exec` bug: OCI runtime exec failed: exec failed: unable to start container process: open /dev/pts/0: operation not permitted: unknown
+
+If you are getting `OCI runtime exec failed: exec failed: unable to start container process: open /dev/pts/0: operation not permitted: unknown` when trying to `exec` into a container, downgrade your `containerd.io` to version 1.6.6 until version 1.6.8 is released. https://askubuntu.com/questions/1424317/docker-20-10-ubuntu-22-04-oci-runtime-exec-failed
+
 ## Conclusion
 
 TODO
