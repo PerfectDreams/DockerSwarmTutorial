@@ -244,11 +244,13 @@ You can apply updates to your stack with `docker stack deploy --compose-file doc
 > If you had an service, removed it from the Compose file and used `stack deploy`, Docker will *not* remove the already running services! To remove an service, use `sudo docker service rm servicename`, you can see all of your stack's running services with `sudo docker stack services stackdemo`!
 
 ## Rolling Updates and Health Checks
+Here's our Web Server. It is very simple and it takes a bit of time to be ready, because it needs to setup database connections and other thingamajigs. 
+
 ```kotlin
 fun main() {
     println("Setting up Web Server...")
 
-    // Imagine if this is initializing db connections and stuff like that
+    // Imagine that this is initializing db connections and stuff like that
     Thread.sleep(15_000)
 
     println("Finished setting up Web Server!")
@@ -269,6 +271,8 @@ fun main() {
 }
 ```
 
+And then have our Docker Compose file with this configuration.
+
 ```yml
 version: '3.9'
 services:
@@ -278,12 +282,15 @@ services:
             - "33333:80"
 ```
 
+Let's check that it works...
+
 ```bash
 mrpowergamerbr@PhoenixWhistler:/mnt/c/Windows/system32$ curl 127.0.0.1:33333
 Hello World!
 ```
 
-However, if we update the application...
+Now, we have a new version of our web server. Because sending `Hello World!` is boring, we changed it to `Hello World! Loritta is so cute!! :3`!
+
 ```yml
 version: '3.9'
 services:
@@ -293,7 +300,7 @@ services:
             - "33333:80"
 ```
 
-You will notice that the old version will be shut down first, then the new version will be deployed.
+However, after deploying the stack update, you will notice that the old version will be shut down first, then the new version will be deployed.
 
 This can be changed by changing `update_config`'s `order` option!
 * `stop-first`: old task is stopped before starting new one (default)
@@ -351,7 +358,7 @@ CONTAINER ID   IMAGE          COMMAND                  CREATED          STATUS  
 c7acffd6aac7   7ffe31bc8eb3   "java -cp @/app/jib-…"   2 minutes ago    Up 2 minutes                                slow-start-web-server-stack_slowstartwebserver.1.imx9ubf9sa4nbl92cc657fq1x
 ```
 
-However, will Docker Swarm try to forward requests to the non-healthy instance while it is booting up?
+But will Docker Swarm try to forward requests to the non-healthy instance while it is booting up?
 
 ```bash
 mrpowergamerbr@PhoenixWhistler:/mnt/c/Windows/system32$ while sleep 1; do curl 127.0.0.1:33333; echo ''; done
@@ -385,7 +392,7 @@ Hello World! Loritta is so cute!! :3
 Hello World! Loritta is so cute!! :3
 ```
 
-Thankfully, Docker Swarm only forward traffic after the instance is healthy and ready to rock!
+Thankfully, Docker Swarm only forwards traffic after the instance is healthy and ready to rock!
 
 ## Application Configurations
 ```bash
