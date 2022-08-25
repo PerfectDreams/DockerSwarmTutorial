@@ -325,7 +325,7 @@ c7acffd6aac7   7ffe31bc8eb3   "java -cp @/app/jib-…"   2 seconds ago   Up Less
 1f94ead29bb0   1c00b295e356   "java -cp @/app/jib-…"   3 minutes ago   Up 3 minutes                      slow-start-web-server-stack_slowstartwebserver.1.gewj7xl809tlzo0mvnkkuiy4s
 ```
 
-Now, when applying updates, both instances will briefly overlap.
+Now, when applying updates, both instances will briefly overlap. If you have used Kubernetes before, you will notice that this is how Kubernetes also works.
 
 But wait, what about the web server's slow start? The previous instance will be shut down before our new instance is ready to serve new connections!
 
