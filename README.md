@@ -342,7 +342,10 @@ services:
             update_config:
                 order: start-first
         healthcheck:
-          test: ["CMD", "curl", "-f", "http://localhost"] # What command will be used to check if the system is healthy or not
+          # What command will be used to check if the system is healthy or not
+          # Keep in mind that the command will be executed within your container! So, if you are using curl to check if your service is alive,
+          # you need to be sure that curl is also installed on your container!
+          test: ["CMD", "curl", "-f", "http://localhost"]
           interval: 5s # The check interval
           timeout: 10s # How much time the healthcheck process will wait before timing out
           retries: 3 # How many times the healthcheck will retry before considering the service as unhealthy
