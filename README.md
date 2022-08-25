@@ -243,7 +243,149 @@ You can apply updates to your stack with `docker stack deploy --compose-file doc
 > 
 > If you had an service, removed it from the Compose file and used `stack deploy`, Docker will *not* remove the already running services! To remove an service, use `sudo docker service rm servicename`, you can see all of your stack's running services with `sudo docker stack services stackdemo`!
 
-TODO: Rolling Updates
+## Rolling Updates and Health Checks
+```kotlin
+fun main() {
+    println("Setting up Web Server...")
+
+    // Imagine if this is initializing db connections and stuff like that
+    Thread.sleep(15_000)
+
+    println("Finished setting up Web Server!")
+
+    println("Starting Web Server...")
+
+    val server = embeddedServer(Netty) {
+        routing {
+            get("/") {
+                call.respondText("Hello World!")
+            }
+        }
+    }
+
+    server.start(true)
+
+    println("Finished Starting Web Server!")
+}
+```
+
+```yml
+version: '3.9'
+services:
+    slowstartwebserver:
+        image: sha256:7ffe31bc8eb30ba35b98b25a13bd748a7b5cd284826100656c2c6ffcfe9630d1
+        ports:
+            - "33333:80"
+```
+
+```bash
+mrpowergamerbr@PhoenixWhistler:/mnt/c/Windows/system32$ curl 127.0.0.1:33333
+Hello World!
+```
+
+However, if we update the application...
+```yml
+version: '3.9'
+services:
+    slowstartwebserver:
+        image: sha256:1c00b295e356ad17156d2c12e856132c4bbde008c862ab1e2d449afadbfda36b
+        ports:
+            - "33333:80"
+```
+
+You will notice that the old version will be shut down first, then the new version will be deployed.
+
+This can be changed by changing `update_config`'s `order` option!
+* `stop-first`: old task is stopped before starting new one (default)
+* `start-first`: new task is started first, and the running tasks briefly overlap
+
+```yml
+version: '3.9'
+services:
+    slowstartwebserver:
+        image: sha256:1c00b295e356ad17156d2c12e856132c4bbde008c862ab1e2d449afadbfda36b
+        ports:
+            - "33333:80"
+        deploy:
+            update_config:
+                order: start-first
+```
+
+```bash
+mrpowergamerbr@PhoenixWhistler:/mnt/c/Windows/system32$ docker ps
+CONTAINER ID   IMAGE          COMMAND                  CREATED         STATUS                  PORTS     NAMES
+c7acffd6aac7   7ffe31bc8eb3   "java -cp @/app/jib-…"   2 seconds ago   Up Less than a second             slow-start-web-server-stack_slowstartwebserver.1.imx9ubf9sa4nbl92cc657fq1x
+1f94ead29bb0   1c00b295e356   "java -cp @/app/jib-…"   3 minutes ago   Up 3 minutes                      slow-start-web-server-stack_slowstartwebserver.1.gewj7xl809tlzo0mvnkkuiy4s
+```
+
+Now, when applying updates, both instances will briefly overlap.
+
+But wait, what about the web server's slow start? The previous instance will be shut down before our new instance is ready to serve new connections!
+
+That's where Docker's HEALTHCHECK comes in!
+
+```yml
+version: '3.9'
+services:
+    slowstartwebserver:
+        image: sha256:7ffe31bc8eb30ba35b98b25a13bd748a7b5cd284826100656c2c6ffcfe9630d1
+        ports:
+            - "33333:80"
+        deploy:
+            update_config:
+                order: start-first
+        healthcheck:
+          test: ["CMD", "curl", "-f", "http://localhost"] # What command will be used to check if the system is healthy or not
+          interval: 5s # The check interval
+          timeout: 10s # How much time the healthcheck process will wait before timing out
+          retries: 3 # How many times the healthcheck will retry before considering the service as unhealthy
+          start_period: 15s # Healthcheck initial delay
+```
+
+Now, the previous instance won't be shut down until the new instance is healthy!
+
+```bash
+PS C:\Users\Leonardo\Documents\Docker> docker ps
+CONTAINER ID   IMAGE          COMMAND                  CREATED          STATUS                            PORTS     NAMES
+53f4b4ec536c   7ffe31bc8eb3   "java -cp @/app/jib-…"   11 seconds ago   Up 9 seconds (health: starting)             slow-start-web-server-stack_slowstartwebserver.1.om1wcqjibzylpsnhmnn46twf2
+c7acffd6aac7   7ffe31bc8eb3   "java -cp @/app/jib-…"   2 minutes ago    Up 2 minutes                                slow-start-web-server-stack_slowstartwebserver.1.imx9ubf9sa4nbl92cc657fq1x
+```
+
+However, will Docker Swarm try to forward requests to the non-healthy instance while it is booting up?
+
+```bash
+mrpowergamerbr@PhoenixWhistler:/mnt/c/Windows/system32$ while sleep 1; do curl 127.0.0.1:33333; echo ''; done
+Hello World!
+Hello World!
+Hello World!
+Hello World!
+Hello World!
+Hello World!
+Hello World!
+Hello World!
+Hello World!
+Hello World!
+Hello World!
+Hello World!
+Hello World!
+Hello World!
+Hello World!
+Hello World!
+Hello World!
+Hello World!
+Hello World!
+Hello World!
+Hello World!
+Hello World!
+Hello World!
+Hello World!
+Hello World! Loritta is so cute!! :3
+Hello World! Loritta is so cute!! :3
+Hello World! Loritta is so cute!! :3
+Hello World! Loritta is so cute!! :3
+```
+
+Thankfully, Docker Swarm only forward traffic after the instance is healthy and ready to rock!
 
 ## Application Configurations
 ```bash
